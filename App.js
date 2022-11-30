@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Task from './src/pages/Task';
 import NewTask from './src/pages/NewTask';
 import Details from './src/pages/Details';
+import Login from './src/pages/Login';
 
 const Stack = createStackNavigator();
 
@@ -12,24 +13,31 @@ export default function App() {
           <NavigationContainer>
                <Stack.Navigator initialRouteName='Task'>
                     <Stack.Screen
+                         name='Login'
+                         component={Login}
+                         options={{
+                              headerShown: false
+                         }}
+                    />
+                    <Stack.Screen
                          name='Task'
                          component={Task}
                          options={{
-                              headerTintColor: '#F92E6A'
+                              headerShown: false
                          }}
                     />
                     <Stack.Screen
                          name='NewTask'
                          component={NewTask}
                          options={{
-                              headerTintColor: '#F92E6A'
+                              headerShown: false
                          }}
                     />
                     <Stack.Screen
                          name='Details'
                          component={Details}
                          options={{
-                              headerTintColor: '#F92E6A'
+                              headerShown: false
                          }}
                     />
                </Stack.Navigator>

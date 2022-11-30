@@ -3,22 +3,45 @@ import styled from "styled-components/native";
 export const Container = styled.View`
      flex: 1;
      background: #FFFFFF;
-     padding-top: 20px;
+     padding: 30px;
+`;
+
+export const AlertContainer = styled.View`
+     flex: 1;
+     align-items: center;
+     justify-content: center;
+`;
+
+export const NoTaskFound = styled.Text`
+     text-align: center;
+     font-size: 26px;
+     margin-top: 10px;
+`;
+
+export const LogoContainer = styled.View`
+     margin: 0 auto;
 `;
 
 export const TaskContainer = styled.View`
      width: 100%;
-     height: 70px;
      flex-direction: row;
      align-items: center;
      justify-content: space-between;
-     padding: 0 30px;
+`;
+
+export const Title = styled.Text`
+     margin-top: 15px;
+     font-size: 20px;
+     font-weight: bold;
+     margin-bottom: 20px;
 `;
 
 export const TaskDetails = styled.View`
      flex-direction: row;
      align-items: center;
      min-width: 220px;
+     max-width: 220px;
+     height: 50px;
 `;
 
 export const TaskTitle = styled.Text`
@@ -31,9 +54,25 @@ export const AddButton = styled.TouchableOpacity`
      height: 50px;
      position: absolute;
      bottom: 30px;
-     right: 20px;
+     right: 30px;
      background: #F92E6A;
      border-radius: 50px;
      justify-content: center;
      align-items: center;
+`;
+
+export const DetailsButton = styled.TouchableOpacity`
+     min-width: 50px;
+     max-width: 50px;
+     height: 50px;
+     align-items: center;
+     justify-content: center;
+`;
+
+export const DeleteButton = styled.TouchableOpacity`
+     min-width: 50px;
+     max-width: 50px;
+     height: 50px;
+     align-items: center;
+     justify-content: center;
 `;
