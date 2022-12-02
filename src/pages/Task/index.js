@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import firebase from '../../config/firebaseConfig';
 import { AddButton, AlertContainer, Container, DeleteButton, DetailsButton, LogoContainer, NoTaskFound, TaskContainer, TaskDetails, TaskTitle, Title } from './styles';
-import { faCircle, faEdit, faPlus, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCircle, faEdit, faPlus, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import Logo from '../../components/Logo';
@@ -31,9 +31,7 @@ export default function Task({ navigation }) {
           return (
                <TaskContainer>
                     <TaskDetails>
-                         <TouchableOpacity onPress={() => deleteTask(item.id)}>
-                              <FontAwesomeIcon icon={faCircle} size={6} color='#F92E6A' />
-                         </TouchableOpacity>
+                         <FontAwesomeIcon icon={faCircle} size={6} color='#F92E6A' />
                          <TaskTitle>
                               {item.description}
                          </TaskTitle>
