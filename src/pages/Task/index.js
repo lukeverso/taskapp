@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import firebase from '../../config/firebaseConfig';
-import { AddButton, AlertContainer, Container, DeleteButton, DetailsButton, LogoContainer, NoTaskFound, TaskContainer, TaskDetails, TaskTitle, Title } from './styles';
+import { AddButton, AlertContainer, BackButton, Container, DeleteButton, DetailsButton, LogoContainer, NoTaskFound, TaskContainer, TaskDetails, TaskTitle, Title } from './styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCircle, faEdit, faPlus, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faCircle, faEdit, faPlus, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import Logo from '../../components/Logo';
 
-export default function Task({ navigation }) {
+export default function Task({ navigation, route }) {
      const database = firebase.firestore();
 
      const [task, setTask] = useState([]);
 
      useEffect(() => {
-          database.collection('Tasks').onSnapshot((query) => {
+          database.collection(route.params.userId).onSnapshot((query) => {
                const list = [];
                query.forEach((doc) => {
                     list.push({ ...doc.data(), id: doc.id });
@@ -23,8 +23,15 @@ export default function Task({ navigation }) {
           });
      }, []);
 
+     function logout() {
+          firebase.auth().signOut()
+               .then(() => {
+                    navigation.navigate('Login');
+               });
+     };
+
      function deleteTask(id) {
-          database.collection('Tasks').doc(id).delete();
+          database.collection(route.params.userId).doc(id).delete();
      };
 
      function renderItem({ item }) {
@@ -38,7 +45,8 @@ export default function Task({ navigation }) {
                     </TaskDetails>
                     <DetailsButton onPress={() => navigation.navigate('Details', {
                          id: item.id,
-                         description: item.description
+                         description: item.description,
+                         userId: route.params.userId
                     })}>
                          <FontAwesomeIcon icon={faEdit} size={18} color='#F92E6A' />
                     </DetailsButton>
@@ -46,8 +54,8 @@ export default function Task({ navigation }) {
                          <FontAwesomeIcon icon={faTrash} size={18} color='#F92E6A' />
                     </DeleteButton>
                </TaskContainer>
-          )
-     }
+          );
+     };
 
      return (
           <Container style={{ marginTop: Constants.statusBarHeight }}>
@@ -70,7 +78,14 @@ export default function Task({ navigation }) {
                          />
                     </>
                )}
-               <AddButton onPress={() => navigation.navigate('NewTask')}>
+               <BackButton onPress={logout}>
+                    <FontAwesomeIcon icon={faArrowRightFromBracket} size={24} color='#FFFFFF' />
+               </BackButton>
+               <AddButton
+                    onPress={() => navigation.navigate('NewTask', {
+                         userId: route.params.userId
+                    })}
+               >
                     <FontAwesomeIcon icon={faPlus} size={24} color='#FFFFFF' />
                </AddButton>
           </Container>

@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Logo from '../../components/Logo';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
-import { Container, LoginInput, LoginButton, LoginContainer, CreateAccountButton } from './styles';
+import { Container, LoginInput, LoginButton, LoginContainer, CreateAccountButton, ErrorContainer } from './styles';
 import { Text } from 'react-native';
 import firebase from '../../config/firebaseConfig';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { View } from 'react-native-web';
 
 export default function Login({ navigation }) {
      const [email, setEmail] = useState('');
@@ -25,7 +28,15 @@ export default function Login({ navigation }) {
                });
      };
 
-     useEffect(() => { }, []);
+     useEffect(() => {
+          firebase.auth().onAuthStateChanged((user) => {
+               if (user) {
+                    navigation.navigate('Task', {
+                         userId: user.uid
+                    });
+               };
+          });
+     }, []);
 
      return (
           <Container style={{ marginTop: Constants.statusBarHeight }}>
@@ -38,8 +49,15 @@ export default function Login({ navigation }) {
                     />
                     <LoginInput
                          placeholder='Senha'
+                         secureTextEntry={true}
                          onChangeText={setPassword}
                     />
+                    {error === true ?
+                         <ErrorContainer>
+                              <FontAwesomeIcon icon={faCircleExclamation} size={16} color='#F92E6A' />
+                              <Text style={{ color: '#F92E6A', fontSize: 16 }}>E-mail ou senha inválido(s).</Text>
+                         </ErrorContainer>
+                         : <View />}
                     <LoginButton onPress={login}>
                          <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 }}>Entrar</Text>
                     </LoginButton>

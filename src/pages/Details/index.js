@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import firebase from '../../config/firebaseConfig';
-import { Container, DescriptionInput, LogoContainer, SaveButton, Title } from './styles';
+import { BackButton, Container, DescriptionInput, LogoContainer, SaveButton, Title } from './styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../components/Logo';
@@ -14,10 +14,12 @@ export default function Details({ navigation, route }) {
      const taskId = route.params.id;
 
      function editTask(description, id) {
-          database.collection('Tasks').doc(id).update({
+          database.collection(route.params.userId).doc(id).update({
                description: description
           });
-          navigation.navigate('Task');
+          navigation.navigate('Task', {
+               userId: route.params.userId
+          });
      };
 
      return (
@@ -32,6 +34,11 @@ export default function Details({ navigation, route }) {
                     onChangeText={setEditedDescription}
                     value={editedDescription}
                />
+               <BackButton onPress={() => navigation.navigate('Task', {
+                    userId: route.params.userId
+               })}>
+                    <FontAwesomeIcon icon={faArrowLeft} size={24} color='#FFFFFF' />
+               </BackButton>
                <SaveButton onPress={() => editTask(editedDescription, taskId)}>
                     <FontAwesomeIcon icon={faSave} size={24} color='#FFFFFF' />
                </SaveButton>

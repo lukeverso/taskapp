@@ -23,6 +23,13 @@ export const LoginInput = styled.TextInput`
      border-bottom-color: #F92E6A;
 `;
 
+export const ErrorContainer = styled.View`
+     margin-bottom: 25px;
+     flex-direction: row;
+     gap: 10px;
+     align-items: center;
+`;
+
 export const LoginButton = styled.TouchableOpacity`
      width: 50%;
      height: 40px;

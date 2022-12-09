@@ -49,6 +49,18 @@ export const TaskTitle = styled.Text`
      margin-left: 10px;
 `;
 
+export const BackButton = styled.TouchableOpacity`
+     width: 50px;
+     height: 50px;
+     position: absolute;
+     bottom: 30px;
+     left: 30px;
+     background: #F92E6A;
+     border-radius: 50px;
+     justify-content: center;
+     align-items: center;
+`;
+
 export const AddButton = styled.TouchableOpacity`
      width: 50px;
      height: 50px;

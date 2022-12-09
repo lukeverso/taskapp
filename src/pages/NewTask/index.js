@@ -1,24 +1,24 @@
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React, { useState } from 'react';
 import firebase from '../../config/firebaseConfig';
-import { Container, DescriptionInput, LogoContainer, SaveButton, Title } from './styles';
+import { BackButton, Container, DescriptionInput, LogoContainer, SaveButton, Title } from './styles';
 import Constants from 'expo-constants';
 import Logo from '../../components/Logo';
 import { StatusBar } from 'expo-status-bar';
 
-export default function NewTask({ navigation }) {
+export default function NewTask({ navigation, route }) {
      const database = firebase.firestore();
 
      const [description, setDescription] = useState('');
-     const [status, setStatus] = useState(false);
 
      function addTask() {
-          database.collection('Tasks').add({
-               description: description,
-               status: status
+          database.collection(route.params.userId).add({
+               description: description
           });
-          navigation.navigate('Task');
+          navigation.navigate('Task', {
+               userId: route.params.userId
+          });
      };
 
      return (
@@ -33,6 +33,9 @@ export default function NewTask({ navigation }) {
                     onChangeText={setDescription}
                     value={description}
                />
+               <BackButton onPress={() => navigation.navigate('Task')}>
+                    <FontAwesomeIcon icon={faArrowLeft} size={24} color='#FFFFFF' />
+               </BackButton>
                <SaveButton onPress={() => addTask()}>
                     <FontAwesomeIcon icon={faSave} size={24} color='#FFFFFF' />
                </SaveButton>
