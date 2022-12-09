@@ -9,12 +9,10 @@ import Constants from 'expo-constants';
 import Logo from '../../components/Logo';
 
 export default function Task({ navigation, route }) {
-     const database = firebase.firestore();
-
      const [task, setTask] = useState([]);
 
      useEffect(() => {
-          database.collection(route.params.userId).onSnapshot((query) => {
+          firebase.firestore().collection(route.params.userId).onSnapshot((query) => {
                const list = [];
                query.forEach((doc) => {
                     list.push({ ...doc.data(), id: doc.id });
@@ -31,21 +29,20 @@ export default function Task({ navigation, route }) {
      };
 
      function deleteTask(id) {
-          database.collection(route.params.userId).doc(id).delete();
+          firebase.firestore().collection(route.params.userId).doc(id).delete();
      };
 
      function renderItem({ item }) {
           return (
                <TaskContainer>
                     <TaskDetails>
-                         <FontAwesomeIcon icon={faCircle} size={6} color='#F92E6A' />
                          <TaskTitle>
-                              {item.description}
+                              {item.task}
                          </TaskTitle>
                     </TaskDetails>
                     <DetailsButton onPress={() => navigation.navigate('Details', {
                          id: item.id,
-                         description: item.description,
+                         task: item.task,
                          userId: route.params.userId
                     })}>
                          <FontAwesomeIcon icon={faEdit} size={18} color='#F92E6A' />
@@ -63,12 +60,7 @@ export default function Task({ navigation, route }) {
                <LogoContainer>
                     <Logo />
                </LogoContainer>
-               {task.length == 0 ? (
-                    <AlertContainer>
-                         <FontAwesomeIcon icon={faTriangleExclamation} size={40} color='#F92E6A' />
-                         <NoTaskFound>Nenhuma tarefa encontrada!</NoTaskFound>
-                    </AlertContainer>
-               ) : (
+               {task.length !== 0 ? (
                     <>
                          <Title style={{ color: '#F92E6A' }}>Todas as minhas tarefas</Title>
                          <FlatList
@@ -77,6 +69,11 @@ export default function Task({ navigation, route }) {
                               renderItem={renderItem}
                          />
                     </>
+               ) : (
+                    <AlertContainer>
+                         <FontAwesomeIcon icon={faTriangleExclamation} size={40} color='#F92E6A' />
+                         <NoTaskFound>Nenhuma tarefa encontrada!</NoTaskFound>
+                    </AlertContainer>
                )}
                <BackButton onPress={logout}>
                     <FontAwesomeIcon icon={faArrowRightFromBracket} size={24} color='#FFFFFF' />

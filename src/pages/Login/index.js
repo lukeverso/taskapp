@@ -22,9 +22,8 @@ export default function Login({ navigation }) {
                          userId: user.uid
                     });
                })
-               .catch((err) => {
+               .catch(() => {
                     setError(true);
-                    const error = err.message;
                });
      };
 

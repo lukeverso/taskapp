@@ -17,7 +17,7 @@ export const Title = styled.Text`
      margin-bottom: 20px;
 `;
 
-export const DescriptionInput = styled.TextInput`
+export const DetailsInput = styled.TextInput`
      height: 50px;
      margin-bottom: 20px;
      border-bottom-width: 1px;

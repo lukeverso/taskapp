@@ -37,12 +37,9 @@ export default function Register({ navigation }) {
                     })
                     .catch((err) => {
                          setError(true);
-                         const error = err.message;
                     });
           };
      };
-
-     useEffect(() => { }, []);
 
      return (
           <Container style={{ marginTop: Constants.statusBarHeight }}>

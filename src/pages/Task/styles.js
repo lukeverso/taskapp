@@ -27,6 +27,7 @@ export const TaskContainer = styled.View`
      flex-direction: row;
      align-items: center;
      justify-content: space-between;
+     margin: 15px 0;
 `;
 
 export const Title = styled.Text`
@@ -41,7 +42,6 @@ export const TaskDetails = styled.View`
      align-items: center;
      min-width: 220px;
      max-width: 220px;
-     height: 50px;
 `;
 
 export const TaskTitle = styled.Text`
